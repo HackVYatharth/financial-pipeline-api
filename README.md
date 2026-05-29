@@ -1,6 +1,14 @@
 # Financial Transaction Pipeline & Analytics API
 
+![CI](https://github.com/HackVYatharth/financial-pipeline-api/actions/workflows/ci.yml/badge.svg)
+![Python](https://img.shields.io/badge/python-3.11+-blue.svg)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688.svg)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+
 A production-grade ETL pipeline and REST analytics API for financial transaction data — built to demonstrate data engineering, analytics, and backend API skills relevant to fintech consulting roles (Deloitte, ZS Associates, Mastercard Analytics).
+
+**🔗 Live Project:** [github.com/HackVYatharth/financial-pipeline-api](https://github.com/HackVYatharth/financial-pipeline-api)
 
 ---
 
@@ -223,3 +231,56 @@ curl "http://localhost:8000/transactions/?category=Travel&channel=online&limit=2
 # Trigger a fresh ETL run
 curl -X POST "http://localhost:8000/pipeline/run?num_transactions=10000"
 ```
+
+---
+
+## 📊 Project Metrics
+
+| Metric | Value |
+|--------|-------|
+| **Total Lines of Code** | ~1,945 |
+| **Python Modules** | 16 |
+| **API Endpoints** | 13 |
+| **SQL Views** | 5 |
+| **Test Coverage** | ~90% target |
+| **Default Dataset Size** | 50,000 transactions |
+| **Merchant Categories** | 12 |
+| **Transaction Channels** | 4 (online, in-store, mobile, ATM) |
+| **Anomaly Detection Methods** | 2 (Z-score + IQR) |
+
+---
+
+## 🎓 Learning Outcomes & Interview Value
+
+This project demonstrates:
+
+✅ **ETL Design Patterns** — Modular extract-transform-load with configurable data generation  
+✅ **SQL Optimization** — Strategic indexing, analytical views, window functions (LAG for MoM change)  
+✅ **Statistical Analysis** — Per-category Z-score and IQR-based anomaly detection  
+✅ **API Development** — RESTful design with FastAPI, Pydantic validation, auto-generated docs  
+✅ **Workflow Orchestration** — Airflow DAG with task dependencies and XCom state passing  
+✅ **Data Visualization** — Jupyter notebook with matplotlib/seaborn (7 chart types)  
+✅ **Containerization** — Multi-service Docker Compose stack  
+✅ **Testing** — Pytest unit tests with coverage reporting  
+✅ **CI/CD** — GitHub Actions pipeline with PostgreSQL service container
+
+**Target Roles:** Data Engineer, Analytics Engineer, Backend Engineer (fintech-focused)
+
+---
+
+## 🤝 Contributing
+
+Contributions welcome! Areas for extension:
+- Replace Faker with Kafka/Kinesis streaming ingestion
+- Add dbt models for SQL transformations
+- Implement real-time dashboard with Plotly Dash or Streamlit
+- Add authentication (OAuth2, API keys)
+- Migrate to BigQuery or Redshift for cloud deployment
+
+---
+
+## 📄 License
+
+MIT License — see [LICENSE](LICENSE) for details.
+
+Built by [Yatharth Bisaria](https://github.com/HackVYatharth) to showcase data engineering capabilities for fintech consulting interviews.
