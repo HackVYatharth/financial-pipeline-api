@@ -61,8 +61,8 @@ def iqr_anomalies(
     result = df.copy()
     result["iqr_anomaly"] = (
         result.groupby("merchant_category", group_keys=False)
-        .apply(_iqr_flag)
-        .reset_index(level=0, drop=True)
+        .apply(_iqr_flag, include_groups=False)
+        .values
     )
     return result[result["iqr_anomaly"]].sort_values("amount", ascending=False)
 
