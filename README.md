@@ -6,7 +6,7 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-A production-grade ETL pipeline and REST analytics API for financial transaction data — built to demonstrate data engineering, analytics, and backend API skills relevant to fintech consulting roles (Deloitte, ZS Associates, Mastercard Analytics).
+A production-grade ETL pipeline and REST analytics API for financial transaction datal/o;
 
 **🔗 Live Project:** [github.com/HackVYatharth/financial-pipeline-api](https://github.com/HackVYatharth/financial-pipeline-api)
 
@@ -102,7 +102,7 @@ Synthetic Data (Faker)
 
 ## Quick Start
 
-### 1. Docker (recommended)
+### 1. Docker
 
 ```bash
 # Clone and start all services (Postgres + API + Airflow)
@@ -121,7 +121,7 @@ docker compose up --build
 | Airflow UI | http://localhost:8080 (admin / admin) |
 | PostgreSQL | localhost:5432 |
 
-### 2. Local (without Docker)
+### 2. Local
 
 ```bash
 # Requires Python 3.11+ and a running PostgreSQL instance
@@ -238,10 +238,6 @@ curl -X POST "http://localhost:8000/pipeline/run?num_transactions=10000"
 
 | Metric | Value |
 |--------|-------|
-| **Total Lines of Code** | ~1,945 |
-| **Python Modules** | 16 |
-| **API Endpoints** | 13 |
-| **SQL Views** | 5 |
 | **Test Coverage** | ~90% target |
 | **Default Dataset Size** | 50,000 transactions |
 | **Merchant Categories** | 12 |
@@ -264,8 +260,6 @@ This project demonstrates:
 ✅ **Testing** — Pytest unit tests with coverage reporting  
 ✅ **CI/CD** — GitHub Actions pipeline with PostgreSQL service container
 
-**Target Roles:** Data Engineer, Analytics Engineer, Backend Engineer (fintech-focused)
-
 ---
 
 ## 🤝 Contributing
@@ -278,9 +272,3 @@ Contributions welcome! Areas for extension:
 - Migrate to BigQuery or Redshift for cloud deployment
 
 ---
-
-## 📄 License
-
-MIT License — see [LICENSE](LICENSE) for details.
-
-Built by [Yatharth Bisaria](https://github.com/HackVYatharth) to showcase data engineering capabilities for fintech consulting interviews.
