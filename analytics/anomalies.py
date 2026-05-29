@@ -50,20 +50,22 @@ def iqr_anomalies(
         engine = engine or _engine()
         df = _load_transactions(engine)
 
-    def _iqr_flag(group: pd.DataFrame) -> pd.Series:
-        q1 = group["amount"].quantile(0.25)
-        q3 = group["amount"].quantile(0.75)
+    result = df.copy()
+    result["iqr_anomaly"] = False
+
+    for category in result["merchant_category"].unique():
+        mask = result["merchant_category"] == category
+        amounts = result.loc[mask, "amount"]
+
+        q1 = amounts.quantile(0.25)
+        q3 = amounts.quantile(0.75)
         iqr = q3 - q1
         lower = q1 - multiplier * iqr
         upper = q3 + multiplier * iqr
-        return (group["amount"] < lower) | (group["amount"] > upper)
 
-    result = df.copy()
-    result["iqr_anomaly"] = (
-        result.groupby("merchant_category", group_keys=False)
-        .apply(_iqr_flag, include_groups=False)
-        .values
-    )
+        anomaly_mask = (amounts < lower) | (amounts > upper)
+        result.loc[mask & anomaly_mask, "iqr_anomaly"] = True
+
     return result[result["iqr_anomaly"]].sort_values("amount", ascending=False)
 
 
