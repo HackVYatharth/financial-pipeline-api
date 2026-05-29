@@ -1,0 +1,67 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: finpipeline_db
+    environment:
+      POSTGRES_DB: finpipeline
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ../sql/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+      - ../sql/analytical_views.sql:/docker-entrypoint-initdb.d/02-views.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: finpipeline_api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/finpipeline
+      NUM_TRANSACTIONS: "50000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ..:/app
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+
+  airflow-webserver:
+    image: apache/airflow:2.8.1
+    container_name: finpipeline_airflow
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://postgres:postgres@postgres:5432/airflow
+      AIRFLOW__CORE__FERNET_KEY: ""
+      AIRFLOW__WEBSERVER__SECRET_KEY: "finpipeline_secret"
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/finpipeline
+    volumes:
+      - ../airflow/dags:/opt/airflow/dags
+      - ../pipeline:/opt/airflow/pipeline
+      - ../analytics:/opt/airflow/analytics
+      - ../sql:/opt/airflow/sql
+    ports:
+      - "8080:8080"
+    command: >
+      bash -c "airflow db init &&
+               airflow users create --username admin --password admin
+                 --firstname Admin --lastname User --role Admin
+                 --email admin@finpipeline.local &&
+               airflow webserver"
+
+volumes:
+  pg_data:

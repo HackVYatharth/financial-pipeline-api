@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment files
+.env
+*.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/*.png
+
+# Testing
+.coverage
+.pytest_cache/
+htmlcov/
+
+# Docker
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Airflow
+airflow/logs/
+airflow/plugins/
+airflow.cfg
+airflow.db
+
+# Temp files
+/tmp/
+*.parquet
