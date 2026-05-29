@@ -1,5 +1,3 @@
-"""Synthetic financial transaction data generator using Faker."""
-
 import random
 import uuid
 from datetime import datetime, timedelta
